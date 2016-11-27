@@ -28,7 +28,7 @@ var argv = minimist(process.argv.slice(2));
 var vars, env;
 
 gulp.task('default', function(callback) {
-  return runSequence('config', 'concat', 'expand', 'beauty', 'minify', 'jshint', 'mochaTest', 'jsdoc3', 'browserSync'/*, 'filelist'*/, terminate);
+  return runSequence('config', 'concat', 'expand', 'beauty', 'minify', 'jshint', 'mochaTest', 'jsdoc3', 'browserSync', terminate);
 });
 
 gulp.task('config', function() {
@@ -39,7 +39,6 @@ gulp.task('config', function() {
   }
   vars = require(varsDir + env + extJson);
   if (!vars) {
-    console.log("nothing configv/vars/" + env + extJson);
     process.exit(-1);
   }
   del(['dist', buildDir + astarisk + extJs]);
@@ -76,14 +75,13 @@ gulp.task('beauty', function() {
     console.log("skip");
     return;
   }
-  var src = gulp.src(buildDir + config.outputName + extJs);
-//  var src = gulp.src("./*.js");
-  src.pipe($.plumber())
+  return gulp.src(buildDir + config.outputName + extJs)
+    .pipe($.plumber())
     .pipe(prettify({
-      'indent_char': config.beautifier.indentChar,
-      'indent_size': config.beautifier.indentSize,
-      'eol': config.beautifier.eol,
-      'end_with_newline': config.beautifier.endWithNewline
+      indent_char : config.beautifier.indentChar,
+      indent_size : config.beautifier.indentSize,
+      eol : config.beautifier.eol,
+      end_with_newline : config.beautifier.endWithNewline
     }))
     .pipe($.convertEncoding({
       to: config.beautifier.convertEncoding
@@ -130,6 +128,7 @@ gulp.task('mochaTest', function() {
 gulp.task('jsdoc3', function(cb) {
   if (!config.jsdoc3.enabled) {
     console.log("skip");
+    return gulp.src('./');
   } else {
     gulp.src(['README.md', buildDir + astarisk + extJs], {
       read: false
@@ -165,59 +164,10 @@ gulp.task('bs-reload', function() {
   browserSync.reload();
 });
 
-/*
-gulp.task('filelist', function() {
-  if (!config.browserSync.enabled) {
-    console.log("skip");
-    return;
-  }
-  fs.writeFile(config.browserSync.server.indexFile, '', function(err) {});
-  walk('src', function(path) {
-    appendIndexFile(path);
-  });
-  walk('vars', function(path) {
-    appendIndexFile(path);
-  });
-  walk('build', function(path) {
-    appendIndexFile(path);
-  });
-  walk('examples', function(path) {
-    appendIndexFile(path);
-  });
-  appendIndexFile('docs/gen');
-  //walk('docs/gen', function(path) {appendIndexFile(path);});
-});
-
-function walk(p, fileCallback, errCallback) {
-  fs.readdir(p, function(err, files) {
-    if (err) {
-      errCallback(err);
-      return;
-    }
-    files.forEach(function(f) {
-      var fp = path.join(p, f);
-      if (fs.statSync(fp).isDirectory()) {
-        walk(fp, fileCallback);
-      } else {
-        fileCallback(fp);
-      }
-    });
-  });
-};
-
-function appendIndexFile(path) {
-  fs.appendFile(config.browserSync.server.indexFile, '<li><a href="' + path + '">' + path + '</a></li>', function(err) {});
-}
-*/
 function terminate() {
   del(['dist', buildDir + tmpfile + astarisk + extJs]);
-  watchTasks();
-  return;
-}
-
-function watchTasks() {
   gulp.watch([srcDir + astarisk + extJs, configFile, varsDir + astarisk + extJson], function() {
     return runSequence('concat', 'expand', 'beauty', 'minify', 'jshint', 'mochaTest', 'jsdoc3');
   });
-  gulp.watch([buildDir + config.outputName + extJs, examplesDir + astarisk], ['bs-reload'/*, 'filelist'*/]);
+  gulp.watch([buildDir + config.outputName + extJs, examplesDir + astarisk], ['bs-reload']);
 }

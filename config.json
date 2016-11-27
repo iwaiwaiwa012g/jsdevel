@@ -25,10 +25,10 @@
         "rcfile" : ".jshintrc"
     },
     "mochaTest" : {
-        "enabled" : true
+        "enabled" : false
     },
     "jsdoc3" : {
-        "enabled" : true
+        "enabled" : false
     },
     "browserSync" : {
         "enabled" : true,
@@ -40,7 +40,7 @@
         "reloadOnRestart" : true,
         "server" : {
           "baseDir" : "./",
-          "indexFile" : "index.html"
+          "indexFile" : ""
         },
         "ui" : {
           "port" : 10001
