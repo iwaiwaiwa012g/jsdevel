@@ -1,0 +1,38 @@
+{
+    "outputName" : "buildToFileName",
+    "concat" : {
+        "enabled" : true,
+        "order" : ["src/test1.js","src/test2.js"]
+    },
+    "expand" : {
+        "enabled" : true,
+        "prefix" : "<% ",
+        "suffix" : " %>"
+    },
+    "beautifier" : {
+        "enabled" : true,
+        "indentChar" : " ",
+        "indentSize" : 2,
+        "eol" : "\n",
+        "endWithNewline" : true,
+        "convertEncoding" : "UTF-8"
+    },
+    "minify" : {
+        "enabled" : true
+    },
+    "jshint" : {
+        "enabled" : true,
+        "rcfile" : ".jshintrc"
+    },
+    "mochaTest" : {
+        "enabled" : true
+    },
+    "jsdoc3" : {
+        "enabled" : true
+    },
+    "browserSync" : {
+        "enabled" : true,
+        "baseDir" : "./",
+        "indexFile" : "index.html"
+    }
+}
