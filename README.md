@@ -4,10 +4,10 @@ jsdevel
 Make be easily the native development with javascript.
 
 ## Description
-The following tasks will be executed by `gulp` command only,will make be easily the native development with javascript.
-These all tasks don't change original files in `src` directory, but make new compiled file in `build` directory. This way is safety.
+The following tasks will be executed by `gulp` command only, will make be easily the native development with javascript.
+These all tasks don't change original files in `src`, new compiled files is generated in `build`. 
 
-## Default gulp tasks
+## Tasks
 1. __CODE CONCAT__ : using [gulp-concat](https://www.npmjs.com/package/gulp-concat)
 2. __EXPAND VARIABLES__ : using [gulp-replace](https://www.npmjs.com/package/gulp-replace)
 3. __CODE BEAUTIFIER__ : using [gulp-jsbeautifier](https://www.npmjs.com/package/gulp-jsbeautify) , [gulp-convert-encoding](https://www.npmjs.com/package/gulp-convert-encoding)
