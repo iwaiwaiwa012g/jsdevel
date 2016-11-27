@@ -1,8 +1,8 @@
 {
-    "outputName" : "buildToFileName",
+    "outputName" : "sampleBuildFileName",
     "concat" : {
         "enabled" : true,
-        "order" : ["src/test1.js","src/test2.js"]
+        "order" : ["src/sample1.js","src/sample2.js"]
     },
     "expand" : {
         "enabled" : true,
