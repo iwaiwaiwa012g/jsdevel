@@ -2,12 +2,14 @@ var gulp = require("gulp"),
     runSequence = require('run-sequence'),
     process = require("process"),
     minimist = require("minimist"),
+    fs = require('fs'),
+    jsyaml = require('js-yaml'),
     $ = require('gulp-load-plugins')(),
     del = require("del"),
     browserSync = require('browser-sync');
 
 var paths = {
-      configFile  : './config.json',
+      configFile  : './config.yml',
       varsDir     : './vars/',
       srcDir      : './src/',
       buildDir    : './dest/',
@@ -16,8 +18,9 @@ var paths = {
       docsDir     : './docs/gen/'
     };
 
-var config = require(paths.configFile);
-var argv = minimist(process.argv.slice(2)),vars,env;
+var config = jsyaml.safeLoad(fs.readFileSync(paths.configFile,'utf8'));
+var argv = minimist(process.argv.slice(2));
+var vars,env;
 
 gulp.task('default', function(callback) {
   return runSequence('config', 'concat', 'expand', 'beauty', 'minify', 'jshint', 'mochaTest', 'jsdoc3', 'browserSync', terminate);
@@ -28,7 +31,7 @@ function terminate() {
   gulp.watch([paths.srcDir + '*' + '.js', paths.configFile, paths.varsDir + '*' + '.json'], function() {
     return runSequence('concat', 'expand', 'beauty', 'minify', 'jshint', 'mochaTest', 'jsdoc3');
   });
-  gulp.watch([paths.buildDir + config.outputName + '.js', paths.examplesDir + '*'], ['bs-reload']);
+  gulp.watch([paths.buildDir + config.destname + '.js', paths.examplesDir + '*'], ['bs-reload']);
 }
 
 gulp.task('config', function() {
@@ -37,7 +40,7 @@ gulp.task('config', function() {
   } else {
     env = argv['e'];
   }
-  vars = require(paths.varsDir + env + '.json');
+  vars = jsyaml.safeLoad(fs.readFileSync(paths.varsDir+env+'.yml','utf8'));
   if (!vars) {
     process.exit(-1);
   }
@@ -65,7 +68,7 @@ gulp.task('expand', ['concat'], function() {
     mod = vars[k];
     tmp.pipe($.replace(val, mod));
   }
-  return tmp.pipe($.rename(config.outputName + '.js'))
+  return tmp.pipe($.rename(config.destname + '.js'))
     .pipe(gulp.dest(paths.buildDir));
 });
 
@@ -73,7 +76,7 @@ gulp.task('beauty', function() {
   if (!config.beautifier.enabled) {
     return;
   }
-  return gulp.src(paths.buildDir + config.outputName + '.js')
+  return gulp.src(paths.buildDir + config.destname + '.js')
     .pipe($.plumber())
     .pipe($.jsbeautifier({
       indent_char : config.beautifier.indentChar,
@@ -94,10 +97,10 @@ gulp.task('minify', function() {
     return;
   }
   del(['dist', paths.buildDir + 'tmpfile' + '*' + '.js']);
-  return gulp.src(paths.buildDir + config.outputName + '.js')
+  return gulp.src(paths.buildDir + config.destname + '.js')
     .pipe($.plumber())
     .pipe($.uglify())
-    .pipe($.rename(config.outputName + '.min' + '.js'))
+    .pipe($.rename(config.destname + '.min' + '.js'))
     .pipe(gulp.dest(paths.buildDir));
 });
 
@@ -105,7 +108,7 @@ gulp.task('jshint', function() {
   if (!config.jshint.enabled) {
     return;
   }
-  return gulp.src(paths.buildDir + config.outputName + '.js')
+  return gulp.src(paths.buildDir + config.destname + '.js')
     .pipe($.plumber())
     .pipe($.jshint(config.jshint.rcfile))
     .pipe($.jshint.reporter('jshint-stylish'));

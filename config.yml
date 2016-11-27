@@ -1,0 +1,67 @@
+# 最終的に出力されるファイル名(拡張子不要)
+destname: sampledestname
+# ファイル結合
+concat:
+    enabled: true
+    # ファイル結合順
+    order:
+        - src/sample1.js
+        - src/sample2.js
+# 変数展開
+expand:
+    enabled: true
+    # プリフィクス
+    prefix: '<% '
+    # サフィックス
+    suffix: ' %>'
+# コード整形(src以下は変更しない。dest以下に適応)
+beautifier:
+    enabled: true
+    # インデント文字列統一
+    indentChar: ' '
+    # インデントサイズ統一
+    indentSize: 2
+    # 改行コード統一
+    eol: \n
+    # 最後に空白行で終わるか
+    endWithNewLine: false
+    # 文字コード統一
+    convertEncoding: UTF-8
+# コード圧縮
+minify:
+    enabled: true
+# コードチェック
+jshint:
+    enabled: true
+    # チェック内容定義ファイルパス
+    rcfile: .jshintrc
+# mochaでファンクショナルテスト
+mochaTest:
+    enabled: true
+# コメントからのjsdoc生成
+jsdoc3:
+    enabled: true
+# WEBサーバーの立ち上げとマルチブラウザのシンク
+browserSync:
+    enabled: true
+    # 自動的にブラウザを起動させるか(localで動かすなら使える)
+    open: false
+    # host(未指定でIP)
+    host:
+    # LISTENするポート
+    port: 60000
+    # ログレベル(info,debug,silent)
+    logLevel: info
+    # 接続時にログ出力
+    logConnections: true
+    # gulp再実行時にブラウザをリロードさせるか
+    reloadOnRestart: true
+    server:
+        # DocumentRoot的なこと
+        baseDir: ./
+        indexFile:
+    # browserSyncには管理画面がついている
+    ui:
+        # 管理画面LISTENポート
+        port: 10001
+
