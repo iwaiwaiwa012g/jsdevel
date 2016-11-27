@@ -4,8 +4,9 @@ var gulp = require("gulp"),
     minimist = require("minimist"),
     $ = require('gulp-load-plugins')(),
     del = require("del"),
-    browserSync = require('browser-sync'),
-    paths = {
+    browserSync = require('browser-sync');
+
+var paths = {
       configFile  : './config.json',
       tmpfile     : 'tmpfilename',
       varsDir     : './vars/',
@@ -14,20 +15,22 @@ var gulp = require("gulp"),
       testDir     : './tests/',
       examplesDir : './examples/',
       docsDir     : './docs/gen/'
-    },
-    config = require(paths.configFile),
-    argv = minimist(process.argv.slice(2)),
-    vars,
-    env;
+    };
 
-const extJs = '.js';
-const extJson = '.json';
-const extMin = '.min';
-const astarisk = '*';
+var config = require(paths.configFile);
+var argv = minimist(process.argv.slice(2)),vars,env;
 
 gulp.task('default', function(callback) {
   return runSequence('config', 'concat', 'expand', 'beauty', 'minify', 'jshint', 'mochaTest', 'jsdoc3', 'browserSync', terminate);
 });
+
+function terminate() {
+  del(['dist', paths.buildDir + paths.tmpfile + '*' + '.js']);
+  gulp.watch([paths.srcDir + '*' + '.js', paths.configFile, paths.varsDir + '*' + '.json'], function() {
+    return runSequence('concat', 'expand', 'beauty', 'minify', 'jshint', 'mochaTest', 'jsdoc3');
+  });
+  gulp.watch([paths.buildDir + config.outputName + '.js', paths.examplesDir + '*'], ['bs-reload']);
+}
 
 gulp.task('config', function() {
   if (['dev','prod','stage'].indexOf(argv['e']) < 0) {
@@ -35,11 +38,11 @@ gulp.task('config', function() {
   } else {
     env = argv['e'];
   }
-  vars = require(paths.varsDir + env + extJson);
+  vars = require(paths.varsDir + env + '.json');
   if (!vars) {
     process.exit(-1);
   }
-  del(['dist', paths.buildDir + astarisk + extJs]);
+  del(['dist', paths.buildDir + '*' + '.js']);
 });
 
 gulp.task('concat', function() {
@@ -49,7 +52,7 @@ gulp.task('concat', function() {
   }
   return gulp.src(config.concat.order)
     .pipe($.plumber())
-    .pipe($.concat(paths.tmpfile + extJs))
+    .pipe($.concat(paths.tmpfile + '.js'))
     .pipe(gulp.dest(paths.buildDir));
 });
 
@@ -58,14 +61,14 @@ gulp.task('expand', ['concat'], function() {
     console.log("skip");
     return;
   }
-  var tmp = gulp.src(paths.buildDir + paths.tmpfile + extJs);
+  var tmp = gulp.src(paths.buildDir + paths.tmpfile + '.js');
   var val, mod;
   for (k in vars) {
     val = config.expand.prefix + k + config.expand.suffix;
     mod = vars[k];
     tmp.pipe($.replace(val, mod));
   }
-  return tmp.pipe($.rename(config.outputName + extJs))
+  return tmp.pipe($.rename(config.outputName + '.js'))
     .pipe(gulp.dest(paths.buildDir));
 });
 
@@ -74,7 +77,7 @@ gulp.task('beauty', function() {
     console.log("skip");
     return;
   }
-  return gulp.src(paths.buildDir + config.outputName + extJs)
+  return gulp.src(paths.buildDir + config.outputName + '.js')
     .pipe($.plumber())
     .pipe($.jsbeautifier({
       indent_char : config.beautifier.indentChar,
@@ -95,11 +98,11 @@ gulp.task('minify', function() {
     console.log("skip");
     return;
   }
-  del(['dist', paths.buildDir + paths.tmpfile + astarisk + extJs]);
-  return gulp.src(paths.buildDir + config.outputName + extJs)
+  del(['dist', paths.buildDir + paths.tmpfile + '*' + '.js']);
+  return gulp.src(paths.buildDir + config.outputName + '.js')
     .pipe($.plumber())
     .pipe($.uglify())
-    .pipe($.rename(config.outputName + extMin + extJs))
+    .pipe($.rename(config.outputName + '.min' + '.js'))
     .pipe(gulp.dest(paths.buildDir));
 });
 
@@ -108,7 +111,7 @@ gulp.task('jshint', function() {
     console.log("skip");
     return;
   }
-  return gulp.src(paths.buildDir + config.outputName + extJs)
+  return gulp.src(paths.buildDir + config.outputName + '.js')
     .pipe($.plumber())
     .pipe($.jshint(config.jshint.rcfile))
     .pipe($.jshint.reporter('jshint-stylish'));
@@ -119,7 +122,7 @@ gulp.task('mochaTest', function() {
     console.log("skip");
     return;
   }
-  return gulp.src([paths.testDir + astarisk + extJs], {
+  return gulp.src([paths.testDir + '*' + '.js'], {
     read: false
   }).pipe($.mocha());
 });
@@ -129,7 +132,7 @@ gulp.task('jsdoc3', function(cb) {
     console.log("skip");
     return gulp.src('./');
   } else {
-    gulp.src(['README.md', paths.buildDir + astarisk + extJs], {
+    gulp.src(['README.md', paths.buildDir + '*' + '.js'], {
       read: false
     }).pipe($.jsdoc3(cb));
   }
@@ -152,7 +155,7 @@ gulp.task('browserSync', function() {
       baseDir : config.browserSync.server.baseDir,
       index : config.browserSync.server.indexFile
     },
-    files : [paths.examplesDir + astarisk, paths.buildDir + astarisk + extJs],
+    files : [paths.examplesDir + '*', paths.buildDir + '*' + '.js'],
 	ui: {
       port : config.browserSync.ui.port
     }
@@ -162,11 +165,3 @@ gulp.task('browserSync', function() {
 gulp.task('bs-reload', function() {
   browserSync.reload();
 });
-
-function terminate() {
-  del(['dist', paths.buildDir + paths.tmpfile + astarisk + extJs]);
-  gulp.watch([paths.srcDir + astarisk + extJs, paths.configFile, paths.varsDir + astarisk + extJson], function() {
-    return runSequence('concat', 'expand', 'beauty', 'minify', 'jshint', 'mochaTest', 'jsdoc3');
-  });
-  gulp.watch([paths.buildDir + config.outputName + extJs, paths.examplesDir + astarisk], ['bs-reload']);
-}
