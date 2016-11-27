@@ -1,4 +1,4 @@
-var sample = sampleVarsValue;
+var sample = 'sampleVarsValue';
 
 console.log(sample);
 

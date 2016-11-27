@@ -1,4 +1,4 @@
-var sample = <% sampleVarsKey %>;
+var sample = '<% sampleVarsKey %>';
 
 console.log(sample);
 
