@@ -18,13 +18,13 @@ These all tasks don't change original files in `src` directory, but make new com
 8. __MULTI BROWSER SYNCHRONIZE START__ : using [browser-sync](https://www.npmjs.com/package/browser-sync)
 
 ## Install
-1. install nodejs
-2. git clone this
+1. Install node.js
+2. `git clone` this
 3. `npm i -g gulp`
 4. `npm i`
 
 ## Usage
 1. Make javascript files in `src`.
 2. Write variables in `vars`.
-3. Change config in `config.json`.
+3. Set config in `config.json`　you like to.
 4. `gulp` or `gulp -e prod` or `gulp -e stage`
