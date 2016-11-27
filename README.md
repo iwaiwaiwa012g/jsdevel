@@ -31,6 +31,6 @@ $ npm i
 
 ## Usage
 1. Make javascript files in `src`.
-2. Write variables in `vars`.
-3. Set config in `config.json`　you like to.
+2. Write variables in `vars/dev.yml`.
+3. Set config in `config.yml`　you like to.
 4. `gulp` or `gulp -e prod` or `gulp -e stage`
