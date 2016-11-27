@@ -14,9 +14,9 @@ concat:
 expand:
     enabled: true
     # 変数プリフィクス
-    prefix: '<% '
+    prefix: "<% "
     # 変数サフィックス
-    suffix: ' %>'
+    suffix: " %>"
 
 # コード整形処理(差分見たいのでsrc以下は変更しない)
 beautifier:
