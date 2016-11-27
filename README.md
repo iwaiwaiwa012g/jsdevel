@@ -5,7 +5,7 @@ Make be easily the native development with javascript.
 
 ## Description
 The following tasks will be executed by `gulp` command only, will make be easily the native development with javascript.
-These all tasks don't change original files in `src`, new compiled files is generated in `build`. 
+These all tasks don't change original files in `src`, new compiled files will be generated in `build`. 
 
 ### Tasks
 1. __CODE CONCAT__ : using [gulp-concat](https://www.npmjs.com/package/gulp-concat)
