@@ -23,13 +23,13 @@ var argv = minimist(process.argv.slice(2));
 var vars,env;
 
 gulp.task('default', function(callback) {
-  return runSequence('config', 'concat', 'expand', 'beauty', 'minify', 'jshint', 'mochaTest', 'jsdoc3', 'browserSync', terminate);
+  return runSequence('config', 'concat', 'expand', 'beauty', 'jshint', 'minify', 'mochaTest', 'jsdoc3', 'browserSync', terminate);
 });
 
 function terminate() {
   del(['dist', paths.buildDir + 'tmpfile' + '*' + '.js']);
   gulp.watch([paths.srcDir + '*' + '.js', paths.configFile, paths.varsDir + '*' + '.json'], function() {
-    return runSequence('concat', 'expand', 'beauty', 'minify', 'jshint', 'mochaTest', 'jsdoc3');
+    return runSequence('concat', 'expand', 'beauty', 'jshint', 'minify', 'mochaTest', 'jsdoc3');
   });
   gulp.watch([paths.buildDir + config.destname + '.js', paths.examplesDir + '*'], ['bs-reload']);
 }

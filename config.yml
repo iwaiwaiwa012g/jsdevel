@@ -1,60 +1,73 @@
-# 最終的に出力されるファイル名(拡張子不要)
+# 最終的にdest以下に出力されるファイル名、このままだと
+# dest/sampledestname.js 
+# dest/sampledestname.min.js
+# の2つができる.拡張子不要
 destname: sampledestname
 
-# ファイル結合処理
+# いずれもsrc以下を直接変更したりはしない
+# src/からdest/に複製したものに対して処理するのみ
+
+# ファイル結合設定
 concat:
     # 有効・無効
     enabled: true
-    # ファイル結合対象と順序
+    # 対象と順序
     order:
         - src/sample1.js
         - src/sample2.js
 
-# 変数展開処理
+# 変数展開設定
 expand:
+    # 有効・無効
     enabled: true
-    # 変数プリフィクス
+    # 例）<% variable %>
     prefix: "<% "
-    # 変数サフィックス
     suffix: " %>"
 
-# コード整形処理(差分見たいのでsrc以下は変更しない)
+# コード整形設定
 beautifier:
     enabled: true
-    # インデント文字列統一
+    # インデント文字列強制
     indentChar: ' '
-    # インデントサイズ統一
+    # インデントサイズ強制
     indentSize: 2
-    # 改行コード統一
+    # 改行コード強制
     eol: \n
-    # 最後に空白行で終わるか
+    # 最後に空白行で終わらせるか
     endWithNewLine: false
-    # 文字コード統一
+    # 文字コード強制
     convertEncoding: UTF-8
 
-# コード圧縮処理
+# コード圧縮設定
 minify:
     # 有効・無効
     enabled: true
 
-# コードチェック
+# コードチェック設定
+# beautifierと異なりアラートあげるのみ
 jshint:
     # 有効・無効
     enabled: true
-    # チェック内容定義ファイルパス
+    # チェック内容定義ファイル
     rcfile: .jshintrc
 
-# mochaでファンクショナルテスト
+# ファンクショナルテスト
+# tests以下に必要に応じて書く
+# あまり必要性を感じない
 mochaTest:
     # 有効・無効
-    enabled: true
+    enabled: false
 
 # コメントからのjsdoc生成
+# docs/gen以下に作成されるGitHubのREADME.mdもバインドする
+# あまり必要性を感じない
 jsdoc3:
     # 有効・無効
-    enabled: true
+    enabled: false
 
-# WEBサーバーの立ち上げとマルチブラウザのシンク
+# WEBサーバー立ち上げとマルチブラウザのシンク設定
+# 開発時には便利
+# 設定に追加していないがプロキシも設定できる
 browserSync:
     # 有効・無効
     enabled: true
