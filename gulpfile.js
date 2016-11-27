@@ -28,7 +28,7 @@ var argv = minimist(process.argv.slice(2));
 var vars, env;
 
 gulp.task('default', function(callback) {
-  return runSequence('config', 'concat', 'expand', 'beauty', 'minify', 'jshint', 'mochaTest', 'jsdoc3', 'browserSync', 'filelist', terminate);
+  return runSequence('config', 'concat', 'expand', 'beauty', 'minify', 'jshint', 'mochaTest', 'jsdoc3', 'browserSync'/*, 'filelist'*/, terminate);
 });
 
 gulp.task('config', function() {
@@ -150,6 +150,7 @@ gulp.task('browserSync', function() {
     logConnections : config.browserSync.logConnections,
     reloadOnRestart : config.browserSync.reloadOnRestart,
     server: {
+      directory : true,
       baseDir : config.browserSync.server.baseDir,
       index : config.browserSync.server.indexFile
     },
@@ -164,6 +165,7 @@ gulp.task('bs-reload', function() {
   browserSync.reload();
 });
 
+/*
 gulp.task('filelist', function() {
   if (!config.browserSync.enabled) {
     console.log("skip");
@@ -206,7 +208,7 @@ function walk(p, fileCallback, errCallback) {
 function appendIndexFile(path) {
   fs.appendFile(config.browserSync.server.indexFile, '<li><a href="' + path + '">' + path + '</a></li>', function(err) {});
 }
-
+*/
 function terminate() {
   del(['dist', buildDir + tmpfile + astarisk + extJs]);
   watchTasks();
@@ -217,5 +219,5 @@ function watchTasks() {
   gulp.watch([srcDir + astarisk + extJs, configFile, varsDir + astarisk + extJson], function() {
     return runSequence('concat', 'expand', 'beauty', 'minify', 'jshint', 'mochaTest', 'jsdoc3');
   });
-  gulp.watch([buildDir + config.outputName + extJs, examplesDir + astarisk], ['bs-reload', 'filelist']);
+  gulp.watch([buildDir + config.outputName + extJs, examplesDir + astarisk], ['bs-reload'/*, 'filelist'*/]);
 }
