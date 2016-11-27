@@ -8,10 +8,9 @@ var gulp = require("gulp"),
 
 var paths = {
       configFile  : './config.json',
-      tmpfile     : 'tmpfilename',
       varsDir     : './vars/',
       srcDir      : './src/',
-      buildDir    : './build/',
+      buildDir    : './dest/',
       testDir     : './tests/',
       examplesDir : './examples/',
       docsDir     : './docs/gen/'
@@ -25,7 +24,7 @@ gulp.task('default', function(callback) {
 });
 
 function terminate() {
-  del(['dist', paths.buildDir + paths.tmpfile + '*' + '.js']);
+  del(['dist', paths.buildDir + 'tmpfile' + '*' + '.js']);
   gulp.watch([paths.srcDir + '*' + '.js', paths.configFile, paths.varsDir + '*' + '.json'], function() {
     return runSequence('concat', 'expand', 'beauty', 'minify', 'jshint', 'mochaTest', 'jsdoc3');
   });
@@ -47,21 +46,19 @@ gulp.task('config', function() {
 
 gulp.task('concat', function() {
   if (!config.concat.enabled) {
-    console.log("skip");
     return;
   }
   return gulp.src(config.concat.order)
     .pipe($.plumber())
-    .pipe($.concat(paths.tmpfile + '.js'))
+    .pipe($.concat('tmpfile' + '.js'))
     .pipe(gulp.dest(paths.buildDir));
 });
 
 gulp.task('expand', ['concat'], function() {
   if (!config.expand.enabled) {
-    console.log("skip");
     return;
   }
-  var tmp = gulp.src(paths.buildDir + paths.tmpfile + '.js');
+  var tmp = gulp.src(paths.buildDir + 'tmpfile' + '.js');
   var val, mod;
   for (k in vars) {
     val = config.expand.prefix + k + config.expand.suffix;
@@ -74,7 +71,6 @@ gulp.task('expand', ['concat'], function() {
 
 gulp.task('beauty', function() {
   if (!config.beautifier.enabled) {
-    console.log("skip");
     return;
   }
   return gulp.src(paths.buildDir + config.outputName + '.js')
@@ -88,17 +84,16 @@ gulp.task('beauty', function() {
     .pipe($.convertEncoding({
       to: config.beautifier.convertEncoding
     }))
-    .pipe($.diff())
-    .pipe($.diff.reporter())
+//    .pipe($.diff())
+//    .pipe($.diff.reporter())
     .pipe(gulp.dest(paths.buildDir));
 });
 
 gulp.task('minify', function() {
   if (!config.minify.enabled) {
-    console.log("skip");
     return;
   }
-  del(['dist', paths.buildDir + paths.tmpfile + '*' + '.js']);
+  del(['dist', paths.buildDir + 'tmpfile' + '*' + '.js']);
   return gulp.src(paths.buildDir + config.outputName + '.js')
     .pipe($.plumber())
     .pipe($.uglify())
@@ -108,7 +103,6 @@ gulp.task('minify', function() {
 
 gulp.task('jshint', function() {
   if (!config.jshint.enabled) {
-    console.log("skip");
     return;
   }
   return gulp.src(paths.buildDir + config.outputName + '.js')
@@ -119,7 +113,6 @@ gulp.task('jshint', function() {
 
 gulp.task('mochaTest', function() {
   if (!config.mochaTest.enabled) {
-    console.log("skip");
     return;
   }
   return gulp.src([paths.testDir + '*' + '.js'], {
@@ -129,7 +122,6 @@ gulp.task('mochaTest', function() {
 
 gulp.task('jsdoc3', function(cb) {
   if (!config.jsdoc3.enabled) {
-    console.log("skip");
     return gulp.src('./');
   } else {
     gulp.src(['README.md', paths.buildDir + '*' + '.js'], {
@@ -140,7 +132,6 @@ gulp.task('jsdoc3', function(cb) {
 
 gulp.task('browserSync', function() {
   if (!config.browserSync.enabled) {
-    console.log("skip");
     return;
   }
   browserSync({
@@ -155,7 +146,7 @@ gulp.task('browserSync', function() {
       baseDir : config.browserSync.server.baseDir,
       index : config.browserSync.server.indexFile
     },
-    files : [paths.examplesDir + '*', paths.buildDir + '*' + '.js'],
+    files : "**/*",
 	ui: {
       port : config.browserSync.ui.port
     }
