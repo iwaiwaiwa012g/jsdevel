@@ -18,9 +18,9 @@ These all tasks don't change original files in `src` directory, but make new com
 8. __MULTI BROWSER SYNCHRONIZE START__ : using [browser-sync](https://www.npmjs.com/package/browser-sync)
 
 ## Install
-1. `sudo yum install nodejs`
-2. `git clone https://github.com/MichinaoShimizu/jsdevel.git && cd jsdevel`
-3. `sudo npm i -g gulp`
+1. install nodejs
+2. git clone this
+3. `npm i -g gulp`
 4. `npm i`
 
 ## Usage
