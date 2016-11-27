@@ -42,8 +42,6 @@ gulp.task('config', function() {
     console.log("nothing configv/vars/" + env + extJson);
     process.exit(-1);
   }
-  console.log('ENVIRONMENT: ' + env);
-  console.log('VARIABLES: ' + varsDir + env + extJson);
   del(['dist', buildDir + astarisk + extJs]);
 });
 
@@ -145,11 +143,20 @@ gulp.task('browserSync', function() {
     return;
   }
   browserSync({
+    open : config.browserSync.open,
+    host : config.browserSync.host,
+    port : config.browserSync.port,
+    logLevel : config.browserSync.logLevel,
+    logConnections : config.browserSync.logConnections,
+    reloadOnRestart : config.browserSync.reloadOnRestart,
     server: {
-      baseDir: config.browserSync.baseDir,
-      index: config.browserSync.indexFile
+      baseDir : config.browserSync.server.baseDir,
+      index : config.browserSync.server.indexFile
     },
-    files: [examplesDir + astarisk, buildDir + astarisk + extJs]
+    files : [examplesDir + astarisk, buildDir + astarisk + extJs],
+	ui: {
+      port : config.browserSync.ui.port
+    }
   });
 });
 
@@ -162,13 +169,13 @@ gulp.task('filelist', function() {
     console.log("skip");
     return;
   }
-  fs.writeFile(config.browserSync.indexFile, '', function(err) {});
+  fs.writeFile(config.browserSync.server.indexFile, '', function(err) {});
   walk('src', function(path) {
     appendIndexFile(path);
   });
-//  walk('vars', function(path) {
-//    appendIndexFile(path);
-//  });
+  walk('vars', function(path) {
+    appendIndexFile(path);
+  });
   walk('build', function(path) {
     appendIndexFile(path);
   });
@@ -197,7 +204,7 @@ function walk(p, fileCallback, errCallback) {
 };
 
 function appendIndexFile(path) {
-  fs.appendFile(config.browserSync.indexFile, '<li><a href="' + path + '">' + path + '</a></li>', function(err) {});
+  fs.appendFile(config.browserSync.server.indexFile, '<li><a href="' + path + '">' + path + '</a></li>', function(err) {});
 }
 
 function terminate() {

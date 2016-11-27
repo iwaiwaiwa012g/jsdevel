@@ -32,7 +32,19 @@
     },
     "browserSync" : {
         "enabled" : true,
-        "baseDir" : "./",
-        "indexFile" : "index.html"
+        "open" : false,
+        "host" : "",
+        "port" : 60000,
+        "logLevel" : "info",
+        "logConnections" : true,
+        "reloadOnRestart" : true,
+        "port" : 10000,
+        "server" : {
+          "baseDir" : "./",
+          "indexFile" : "index.html"
+        },
+        "ui" : {
+          "port" : 10001
+        }
     }
 }
