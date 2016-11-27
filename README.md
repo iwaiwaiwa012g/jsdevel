@@ -5,9 +5,9 @@ Make be easily the native development with javascript.
 
 ## Description
 The following tasks will be executed by `gulp` command only, will make be easily the native development with javascript.
-These all tasks don't change original files in `src`, new compiled files is generated in `build`. 
+These all tasks don't change original files in `src`, new compiled files will be generated in `build`. 
 
-## Tasks
+### Tasks
 1. __CODE CONCAT__ : using [gulp-concat](https://www.npmjs.com/package/gulp-concat)
 2. __EXPAND VARIABLES__ : using [gulp-replace](https://www.npmjs.com/package/gulp-replace)
 3. __CODE BEAUTIFIER__ : using [gulp-jsbeautifier](https://www.npmjs.com/package/gulp-jsbeautify) , [gulp-convert-encoding](https://www.npmjs.com/package/gulp-convert-encoding)
@@ -17,11 +17,17 @@ These all tasks don't change original files in `src`, new compiled files is gene
 7. __GENERATE DOCS__ : using [gulp-jsdoc3](https://www.npmjs.com/package/gulp-jsdoc3)
 8. __START BROWSER SYNC__ : using [browser-sync](https://www.npmjs.com/package/browser-sync)
 
-## Install
-1. Install node.js
-2. `git clone` this
-3. `npm i -g gulp`
-4. `npm i`
+## Requirement
+* node.js
+
+## Installation
+```
+$ yum install nodejs
+$ git clone https://github.com/MichinaoShimizu/jsdevel.git
+$ cd jsdevel
+$ npm i -g gulp
+$ npm i
+```
 
 ## Usage
 1. Make javascript files in `src`.
