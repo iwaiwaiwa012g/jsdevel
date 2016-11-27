@@ -1,11 +1,5 @@
-# 最終的にdest以下に出力されるファイル名、このままだと
-# dest/sampledestname.js 
-# dest/sampledestname.min.js
-# の2つができる.拡張子不要
+# 最終的なファイル名
 destname: sampledestname
-
-# いずれもsrc以下を直接変更したりはしない
-# src/からdest/に複製したものに対して処理するのみ
 
 # ファイル結合設定
 concat:
@@ -52,44 +46,37 @@ jshint:
     rcfile: .jshintrc
 
 # ファンクショナルテスト
-# tests以下に必要に応じて書く
-# あまり必要性を感じない
 mochaTest:
     # 有効・無効
     enabled: false
 
 # コメントからのjsdoc生成
-# docs/gen以下に作成されるGitHubのREADME.mdもバインドする
-# あまり必要性を感じない
 jsdoc3:
     # 有効・無効
     enabled: false
 
 # WEBサーバー立ち上げとマルチブラウザのシンク設定
-# 開発時には便利
-# 設定に追加していないがプロキシも設定できる
 browserSync:
     # 有効・無効
     enabled: true
-    # 自動的にブラウザを起動させるか(localで動かすなら使える)
+    # 自動的にブラウザ起動
     open: false
-    # host(未指定でIPなので未指定でいい)
+    # LISTEN host
     host:
-    # LISTENポート(firewalldは要確認)
+    # LISTEN port
+    # firewalldは要確認
     port: 60000
-    # ログレベル(info,debug,silent)
+    # ログレベル
     logLevel: info
     # 接続時にログ出力
     logConnections: true
-    # gulp再実行時にブラウザをリロードさせるか
+    # gulp再実行時にブラウザリロード
     reloadOnRestart: true
     # サーバー設定
     server:
-        # DocumentRoot的なこと
+        # DocumentRoot
         baseDir: ./
         indexFile:
-    # browserSyncには管理画面がついているのでそちら側の設定
     ui:
         # 管理画面LISTENポート
         port: 10001
-
