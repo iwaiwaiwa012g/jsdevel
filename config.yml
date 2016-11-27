@@ -1,20 +1,24 @@
 # 最終的に出力されるファイル名(拡張子不要)
 destname: sampledestname
-# ファイル結合
+
+# ファイル結合処理
 concat:
+    # 有効・無効
     enabled: true
-    # ファイル結合順
+    # ファイル結合対象と順序
     order:
         - src/sample1.js
         - src/sample2.js
-# 変数展開
+
+# 変数展開処理
 expand:
     enabled: true
-    # プリフィクス
+    # 変数プリフィクス
     prefix: '<% '
-    # サフィックス
+    # 変数サフィックス
     suffix: ' %>'
-# コード整形(src以下は変更しない。dest以下に適応)
+
+# コード整形処理(差分見たいのでsrc以下は変更しない)
 beautifier:
     enabled: true
     # インデント文字列統一
@@ -27,28 +31,38 @@ beautifier:
     endWithNewLine: false
     # 文字コード統一
     convertEncoding: UTF-8
-# コード圧縮
+
+# コード圧縮処理
 minify:
+    # 有効・無効
     enabled: true
+
 # コードチェック
 jshint:
+    # 有効・無効
     enabled: true
     # チェック内容定義ファイルパス
     rcfile: .jshintrc
+
 # mochaでファンクショナルテスト
 mochaTest:
+    # 有効・無効
     enabled: true
+
 # コメントからのjsdoc生成
 jsdoc3:
+    # 有効・無効
     enabled: true
+
 # WEBサーバーの立ち上げとマルチブラウザのシンク
 browserSync:
+    # 有効・無効
     enabled: true
     # 自動的にブラウザを起動させるか(localで動かすなら使える)
     open: false
-    # host(未指定でIP)
+    # host(未指定でIPなので未指定でいい)
     host:
-    # LISTENするポート
+    # LISTENポート(firewalldは要確認)
     port: 60000
     # ログレベル(info,debug,silent)
     logLevel: info
@@ -56,11 +70,12 @@ browserSync:
     logConnections: true
     # gulp再実行時にブラウザをリロードさせるか
     reloadOnRestart: true
+    # サーバー設定
     server:
         # DocumentRoot的なこと
         baseDir: ./
         indexFile:
-    # browserSyncには管理画面がついている
+    # browserSyncには管理画面がついているのでそちら側の設定
     ui:
         # 管理画面LISTENポート
         port: 10001
