@@ -14,8 +14,8 @@ These all tasks don't change original files in `src` directory, but make new com
 4. __CODE MINIFY__ : using [gulp-uglify](https://www.npmjs.com/package/gulp-uglify)
 5. __CODE CHECK__ : using [gulp-jshint](https://www.npmjs.com/package/gulp-jshint)
 6. __FUNCTIONAL TEST__ : using [gulp-mocha](https://www.npmjs.com/package/gulp-mocha)
-7. __FUNCTIONAL DOCS__ : using [gulp-jsdoc3](https://www.npmjs.com/package/gulp-jsdoc3)
-8. __MULTI BROWSER SYNCHRONIZE START__ : using [browser-sync](https://www.npmjs.com/package/browser-sync)
+7. __GENERATE DOCS__ : using [gulp-jsdoc3](https://www.npmjs.com/package/gulp-jsdoc3)
+8. __START BROWSER SYNC__ : using [browser-sync](https://www.npmjs.com/package/browser-sync)
 
 ## Install
 1. Install node.js
