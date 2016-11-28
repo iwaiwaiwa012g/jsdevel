@@ -30,7 +30,15 @@ $ npm i
 ```
 
 ## Build settings
-All of setting can be controlled in [config.yml](https://github.com/MichinaoShimizu/jsdevel/blob/master/config.yml).
+Build setting can be controlled in [config.yml](https://github.com/MichinaoShimizu/jsdevel/blob/master/config.yml).
+
+### If browserSync is enabeld, but cannot access to server url.
+Maybe firewalld block access. Please check and open the port.
+```
+$ firewall-cmd --list-ports --zone=public
+$ firewall-cmd --add-port=【config.browserSync.port】/tcp --zone=public --permanent
+$ firewall-cmd --add-port=【config.browserSync.ui.port】/tcp --zone=public --permanent
+$ firewall-cmd --reload
 
 ## Usage
 1. Make javascript files in `src`.
