@@ -32,8 +32,7 @@ $ npm i
 ## Build settings
 Build settings can be controlled in [config.yml](https://github.com/MichinaoShimizu/jsdevel/blob/master/config.yml).
 
-### Check the firewalld settins.
-
+### Check the firewalld settings
 If the setting of browserSync is enabled in config.yml however you cannot access the url on browser, maybe be blocked by firewalld. Please check the firewalld settings and open the port according to following procedure.
 
 ```
