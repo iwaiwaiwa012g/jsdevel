@@ -29,6 +29,9 @@ $ npm i -g gulp
 $ npm i
 ```
 
+## Build settings
+All of setting can be controlled in [config.yml](https://github.com/MichinaoShimizu/jsdevel/blob/master/config.yml).
+
 ## Usage
 1. Make javascript files in `src`.
 2. Write variables in `vars/dev.yml`.
