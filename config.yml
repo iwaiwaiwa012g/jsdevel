@@ -1,82 +1,75 @@
-# 最終的なファイル名
+# dest folder
 destname: sampledestname
 
-# ファイル結合設定
+# file concatenation
 concat:
-    # 有効・無効
     enabled: true
-    # 対象と順序
+    # the file will be concatenated in the following listing order
     order:
         - src/sample1.js
         - src/sample2.js
 
-# 変数展開設定
+# parameter expansion
 expand:
-    # 有効・無効
     enabled: true
-    # 例）<% variable %>
+    #   <% variable %>
     prefix: "<% "
     suffix: " %>"
 
-# コード整形設定
+# code beautifier
 beautifier:
     enabled: true
-    # インデント文字列強制
+    # indent chracter
     indentChar: ' '
-    # インデントサイズ強制
+    # indent size
     indentSize: 2
-    # 改行コード強制
+    # forces CRLF at end of line
     eol: \n
-    # 最後に空白行で終わらせるか
+    # The white line
     endWithNewLine: false
-    # 文字コード強制
+    # encoding
     convertEncoding: UTF-8
 
-# コード圧縮設定
+# code minifier
 minify:
-    # 有効・無効
     enabled: true
 
-# コードチェック設定
-# beautifierと異なりアラートあげるのみ
+# code checker
+# *jshint outputs alerts only.
 jshint:
-    # 有効・無効
     enabled: true
-    # チェック内容定義ファイル
+    # configuration
     rcfile: .jshintrc
 
-# ファンクショナルテスト
+# functional test
 mochaTest:
-    # 有効・無効
     enabled: false
 
-# コメントからのjsdoc生成
+# jsdoc genaration
 jsdoc3:
-    # 有効・無効
     enabled: false
 
-# WEBサーバー立ち上げとマルチブラウザのシンク設定
+# web browswer sync
 browserSync:
-    # 有効・無効
     enabled: true
-    # 自動的にブラウザ起動
+    # opens browser automatically
     open: false
     # LISTEN host
     host:
     # LISTEN port
-    # firewalldは要確認
+    # please check firewalld setting
     port: 60000
-    # ログレベル
+    # logging level
     logLevel: info
-    # 接続時にログ出力
+    # log information when connection is established
     logConnections: true
-    # gulp再実行時にブラウザリロード
+    # reload browser on excuting gulp
     reloadOnRestart: true
-    # サーバー設定
+    # server setting
     server:
         # DocumentRoot
         baseDir: ./
         indexFile:
     ui:
-        # 管理画面LISTENポート
+        # LISTEN port for admin
         port: 10001
