@@ -22,7 +22,6 @@ These tasks don't change original files in `src`, new compiled files will be gen
 
 ## Installation
 ```
-$ yum install nodejs
 $ git clone https://github.com/MichinaoShimizu/jsdevel.git
 $ cd jsdevel
 $ npm i -g gulp
