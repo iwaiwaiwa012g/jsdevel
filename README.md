@@ -31,7 +31,12 @@ $ npm i
 ## Build settings
 Build settings can be controlled in [config.yml](https://github.com/MichinaoShimizu/jsdevel/blob/master/config.yml).
 
-### Check the firewalld settings
+## Usage
+1. Make javascript files in `src`.
+2. Write variables in `vars/dev.yml`.
+3. Set config in `config.yml`　you like to.
+4. `gulp` or `gulp -e prod` or `gulp -e stage`
+
 If the setting of browserSync is enabled in config.yml however you cannot access the url on browser, maybe be blocked by firewalld. Please check the firewalld settings and open the port according to following procedure.
 
 ```
@@ -40,9 +45,3 @@ $ firewall-cmd --add-port=【config.browserSync.port】/tcp --zone=public --perm
 $ firewall-cmd --add-port=【config.browserSync.ui.port】/tcp --zone=public --permanent
 $ firewall-cmd --reload
 ```
-
-## Usage
-1. Make javascript files in `src`.
-2. Write variables in `vars/dev.yml`.
-3. Set config in `config.yml`　you like to.
-4. `gulp` or `gulp -e prod` or `gulp -e stage`
