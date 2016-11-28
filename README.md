@@ -39,6 +39,7 @@ $ firewall-cmd --list-ports --zone=public
 $ firewall-cmd --add-port=【config.browserSync.port】/tcp --zone=public --permanent
 $ firewall-cmd --add-port=【config.browserSync.ui.port】/tcp --zone=public --permanent
 $ firewall-cmd --reload
+```
 
 ## Usage
 1. Make javascript files in `src`.
