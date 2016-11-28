@@ -1,7 +1,7 @@
 jsdevel
 ====
 
-Make be easily the native development with javascript.
+The structure to simplify the development with native javascript.
 
 ## Description
 The following tasks will be executed by `gulp` command only, will make be easily the native development with javascript.
